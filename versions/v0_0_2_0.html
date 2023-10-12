@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <label for="bar_selection">Bar: </label>
+        <select name="bar_selection" id="bar_selection" onchange="selected_option('bar')"></select>
+        <br/>
+        <label for="plates_selection">Plates: </label>
+        <select name="plates_selection" id="plates_selection" onchange="selected_option('plates')"></select>
+        <br/>
+        <label for="desired_weight">Desired weight: </label>
+        <input name="desired_weight" id="desired_weight"/>
+        <br/>
+        <button onclick="calculate_desired_weight()">Calculate</button>
+        <br/>
+        <span id="plates_needed"></span>
+        <style>
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: lightslategray;
+}
+        </style>
+        <script>
+}
+
+function selected_option(dropdown) {
+    active_indexes["bar"] = [bar_dropdown, plates_dropdown][["bar","plates"].indexOf(dropdown)].selectedIndex;
+}
+
+function refresh_dropdowns() {
+    while (bar_dropdown.options.length > 0) {                
+        bar_dropdown.remove(0);
+    } 
+    while (plates_dropdown.options.length > 0) {                
+        plates_dropdown.remove(0);
+    }
+    for (let n of Object.keys(contents["bar"])) {
+        option = document.createElement("option");
+        option.text = n;
+        bar_dropdown.add(option);
+    }
+    for (let n of Object.keys(contents["plates"])) {
+        option = document.createElement("option");
+        option.text = n;
+        plates_dropdown.add(option);
+    }
+    bar_dropdown.selectedIndex = active_indexes["bar"];
+    plates_dropdown.selectedIndex = active_indexes["plates"];
+}
+
+function calculate_desired_weight() {
+    let desired_weight = desired_wight_entry.value;
+    if (!Number.isInteger(parseInt(desired_weight))) {
+        plates_needed_text.innerHTML = "<span style='color:red'>Please only include integer in desired weight (for now).</span>";
+        return;
+    }
+    let bar_used = contents["bar"][Object.keys(contents["bar"])[active_indexes["bar"]]];
+    let plates_used = contents["plates"][Object.keys(contents["plates"])[active_indexes["plates"]]];
+    let plates_needed = [];
+    let weight_remaining = parseFloat(desired_weight) - parseFloat(bar_used.split(" ")[0]);
+    if (weight_remaining < 0) {
+        plates_needed_text.innerHTML = "<span style='color:red'>Bar weighs more than desired weight.</span>";
+        return;
+    }
+    for (let j = 0; j < plates_used.length; j++) {
+        let plate = plates_used[j];
+        let num_plates = Math.floor(weight_remaining/2/parseFloat(plate.split(" ")[0]));
+        for (let i = 0; i < num_plates; i++) {
+            plates_needed.push(plate);
+            weight_remaining -= 2 * parseFloat(plate.split(" ")[0]);
+        }
+    }
+    if (weight_remaining != 0) {
+        plates_needed.push("<span style='color:red'>" + String(weight_remaining / 2) + " lbs short each side</span>")
+    }
+    plates_needed_text.innerHTML = plates_needed.join("<br/>");
+}
+
+let bar_dropdown = document.getElementById("bar_selection");
+let plates_dropdown = document.getElementById("plates_selection");
+let desired_wight_entry = document.getElementById("desired_weight");
+let plates_needed_text = document.getElementById("plates_needed");
+
+let contents = {
+    "bar": {
+        "Smith Machine": "25 lbs",
+        "Barbell": "45 lbs",
+        // "Barbell w/ 1 chain": "??? lbs",
+        // "Barbell w/ 2 chains": "??? lbs",
+        // "Barbell w/ weight releaser": "??? lbs",
+        "Dumbbell": "10 lbs"
+    },
+    "plates": {
+        "Planet Fitness": [
+            "45 lbs",
+            "25 lbs",
+            "10 lbs",
+            "5 lbs",
+            "2.5 lbs"
+        ],
+        "Iron Dungeon": [
+            "45 lbs",
+            "35 lbs",
+            "25 lbs",
+            "10 lbs",
+            "5 lbs",
+            "2.5 lbs",
+            "1.5 lbs",
+            "0.5 lbs"
+        ]
+    }
+};
+
+let active_indexes = {
+    "bar": 0,
+    "plates": 0
+};
+
+refresh_dropdowns();
+        </script>
+    </body>
+</html>
