@@ -21,7 +21,7 @@ body {
         </style>
         <script>
 function selected_option(dropdown) {
-    active_indexes["bar"] = [bar_dropdown, plates_dropdown][["bar","plates"].indexOf(dropdown)].selectedIndex;
+    active_indexes[dropdown] = [bar_dropdown, plates_dropdown][["bar","plates"].indexOf(dropdown)].selectedIndex;
 }
 
 function refresh_dropdowns() {
