@@ -31,7 +31,12 @@ body {
 }
         </style>
         <script>
-// TODO:
+// TODO for v0.0.3.0:
+// Change bar weight button
+// Change list of plates button
+// Add prompt when creating new bar/list of plates and changing weights to ask for weights. Specify in the prompt for list of plates to separate values by commas
+// Validate that bar/plate weights are an integer followed by “lb”, “lbs”, “ lb”, “ lbs”, “kg” “kgs”, “ kg”, “ kgs”
+// Have calculate desired weight function be able to tell if we are talking “kg” or “lbs”
 
 function add_option(dropdown) {
     let response = prompt("Enter name of new " + dropdown, dropdown);
@@ -53,8 +58,8 @@ function rename_option(dropdown) {
 }
 
 function revalue_option(dropdown) {
-    console.log("revalue_option(" + dropdown + ")");
-    return "revalue_option('" + dropdown + "'')";
+    alert("Eventually you will be able to edit this " + dropdown + ".")
+    return;
     // Same code as rename:
     let response = prompt("Enter new name of this " + dropdown, Object.keys(contents[dropdown])[active_indexes[dropdown]]);
     if (response != null && response != "" && response != Object.keys(contents[dropdown])[active_indexes[dropdown]] && !(response in Object.keys(contents[dropdown]))) {
@@ -138,9 +143,21 @@ let plates_needed_text = document.getElementById("plates_needed");
 
 let contents = {
     "bar": {
-        "Barbell": "45 lbs"
+        "Smith Machine": "25 lbs",
+        "Barbell": "45 lbs",
+        // "Barbell w/ 1 chain": "??? lbs",
+        // "Barbell w/ 2 chains": "??? lbs",
+        // "Barbell w/ weight releaser": "??? lbs",
+        "Dumbbell": "10 lbs"
     },
     "plates": {
+        "Planet Fitness": [
+            "45 lbs",
+            "25 lbs",
+            "10 lbs",
+            "5 lbs",
+            "2.5 lbs"
+        ],
         "Iron Dungeon": [
             "45 lbs",
             "35 lbs",
