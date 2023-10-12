@@ -10,20 +10,29 @@ The greatest spotting tool since the development of the arm.
 - [x] Add drop down for lists of weights like “Planet Fitness” which could have 45s, 25s, 10s, 5s, 2.5s and “Iron Dungeon” with 45s, 35s, 25s, 10s, 5s, 2.5s, 1.5s, 0.5s
 ## v0.0.3.0 (assuming option 3)
 - [x] Add bar button
-- [ ] Change bar weight button
 - [x] Rename bar button
+- [ ] Change bar weight button
 - [x] Delete bar button
 - [x] Add list of plates button
-- [ ] Change list of plates button
 - [x] Rename list of plates button
+- [ ] Change list of plates button
 - [x] Delete list of plates button
 - [ ] Add prompt when creating new bar/list of plates and changing weights to ask for weights. Specify in the prompt for list of plates to separate values by commas
 - [ ] Validate that bar/plate weights are an integer followed by “lb”, “lbs”, “ lb”, “ lbs”, “kg” “kgs”, “ kg”, “ kgs”
 - [ ] Have calculate desired weight function be able to tell if we are talking “kg” or “lbs”
+## v0.0.3½.0
+- [ ] Make custom implementation of the alert box
+- [ ] Make custom implementation of the confirm box
+- [ ] Make custom implementation of the prompt box
+- [ ] Make a custom implementation of a prompt box that takes a message, two lables, two default values and returns two values
 ## v0.0.4.0
-- [ ] Change from prompts to something where users can edit both names and values at once
+- [ ] Use the multivalue prompt for add and edit buttons
+- [ ] Change some red text spans to be our new alerts for consistancy
+- [ ] Change other alerts, confirms, and prompts to use custom standards
 - [ ] Allow for max numbers of plates (like for instance 2 45s total, then you have to move on to lighter plates when calculating
 - [ ] Give option to add multiple desired weights at once and it will find the least amount of plate movement for switching and display results for each person
+- [ ] Add rename button for desired weights
+- [ ] Add delete button for desired weight
 ## v0.0.5.0
 - [ ] Add pictures of bar with colored plates for quicker compression:
     - [ ] 55s are red
@@ -38,6 +47,7 @@ The greatest spotting tool since the development of the arm.
 - [ ] Allow for asymetrical distribution of plates
 ## v0.0.6.0
 - [ ] Optimize css
+- [ ] Use icons that make sense for buttons
 - [ ] Have add person button, delete person buttons, add bar/list of weights buttons, change bar/list of weights buttons, and delete bar/list of weights buttons only showing when a box is checked for edit mode
 - [ ] Add second tab which has has a name, their picture and text of their bar and plates, maybe a unique accent color, and you can cycle through them
 - [ ] Add day mode and night mode, accent color
@@ -61,9 +71,9 @@ The greatest spotting tool since the development of the arm.
     - [ ] Most improved lifts since joining
     - [ ] Most improved lifts from last week
     - [ ] Attendance streaks
-Release v0.2.0.0 - Database Update
+## Release v0.2.0.0 - Database Update
 
-Further ideas
+## Further ideas
 - [ ] Add accountability group functionality that is opt-outable
 - [ ] Add push up competition group functionality that is also opt-outable
 - [ ] I guess add opt-outability for workout group
