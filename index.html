@@ -122,7 +122,23 @@ function refresh_dropdowns() {
 
 function calculate_desired_weight() {
     let desired_weight = desired_wight_entry.value;
-    let plates_needed = ["25","10","2.5"]
+    if (!Number.isInteger(parseInt(desired_weight))) {
+        plates_needed_text.innerHTML = "Please only include integer in desired weight (for now).";
+        return;
+    }
+    let bar_used = contents["bar"][Object.keys(contents["bar"])[active_indexes["bar"]]];
+    let plates_used = contents["plates"][Object.keys(contents["plates"])[active_indexes["plates"]]];
+    let plates_needed = [];
+    let weight_remaining = parseInt(desired_weight) - parseInt(bar_used.split(" ")[0]);
+    for (let j = 0; j < plates_used.length; j++) {
+        let plate = plates_used[j];
+        let num_plates = Math.floor(weight_remaining/2/parseInt(plate.split(" ")[0]));
+        console.log(weight_remaining, num_plates, plate);
+        for (let i = 0; i < num_plates; i++) {
+            plates_needed.push(plate);
+            weight_remaining -= 2 * parseInt(plate.split(" ")[0]);
+        }
+    }
     plates_needed_text.innerHTML = plates_needed.join("<br/>");
 }
 
