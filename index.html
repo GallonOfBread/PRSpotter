@@ -27,7 +27,7 @@ h2 {
 }
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: lightcoral;
+    background-color: lightslategray;
 }
         </style>
         <script>
@@ -35,23 +35,19 @@ body {
 
 function add_option(dropdown) {
     let response = prompt("Enter name of new " + dropdown, dropdown);
-    if (response != null && response != "" && response != dropdown && response != "Courses" && !(response in Object.keys(contents[dropdown]))) {
+    if (response != null && response != "" && response != dropdown && !(response in Object.keys(contents[dropdown]))) {
         contents[dropdown][response] = ["25 lbs", ["45 lbs", "25 lbs", "10 lbs", "5 lbs", "2.5 lbs"]][["bar","plates"].indexOf(dropdown)];
-        active_indexes[dropdown] = contents[dropdown].length-1;
+        active_indexes[dropdown] = Object.keys(contents[dropdown]).length-1;
         [bar_dropdown, plates_dropdown][["bar","plates"].indexOf(dropdown)].selectedIndex = active_indexes[dropdown];
         refresh_dropdowns();
     }
 }
 
 function rename_option(dropdown) {
-    console.log("rename_option(" + dropdown + ")");
-    return "rename_option(" + dropdown + ")";
-    // Code from my work project that needs work to make compatable:
-    let response = prompt("Enter new name of course", course_name);
-    if (response != null && response != "" && response != "Lesson Title" && !(contents["Courses"].includes(response))) {
-        contents["Courses"][course_index] = response;
-        contents[response] = contents[course_name];
-        delete contents[course_name];
+    let response = prompt("Enter new name of this " + dropdown, Object.keys(contents[dropdown])[active_indexes[dropdown]]);
+    if (response != null && response != "" && response != Object.keys(contents[dropdown])[active_indexes[dropdown]] && !(response in Object.keys(contents[dropdown]))) {
+        contents[dropdown][response] = contents[dropdown][Object.keys(contents[dropdown])[active_indexes[dropdown]]];
+        delete contents[dropdown][Object.keys(contents[dropdown])[active_indexes[dropdown]]];
         course_name = response;
         refresh_dropdowns();
     }
@@ -123,20 +119,19 @@ function refresh_dropdowns() {
 function calculate_desired_weight() {
     let desired_weight = desired_wight_entry.value;
     if (!Number.isInteger(parseInt(desired_weight))) {
-        plates_needed_text.innerHTML = "Please only include integer in desired weight (for now).";
+        plates_needed_text.innerHTML = "<span style='color:red'>Please only include integer in desired weight (for now).</span>";
         return;
     }
     let bar_used = contents["bar"][Object.keys(contents["bar"])[active_indexes["bar"]]];
     let plates_used = contents["plates"][Object.keys(contents["plates"])[active_indexes["plates"]]];
     let plates_needed = [];
-    let weight_remaining = parseInt(desired_weight) - parseInt(bar_used.split(" ")[0]);
+    let weight_remaining = parseFloat(desired_weight) - parseFloat(bar_used.split(" ")[0]);
     for (let j = 0; j < plates_used.length; j++) {
         let plate = plates_used[j];
-        let num_plates = Math.floor(weight_remaining/2/parseInt(plate.split(" ")[0]));
-        console.log(weight_remaining, num_plates, plate);
+        let num_plates = Math.floor(weight_remaining/2/parseFloat(plate.split(" ")[0]));
         for (let i = 0; i < num_plates; i++) {
             plates_needed.push(plate);
-            weight_remaining -= 2 * parseInt(plate.split(" ")[0]);
+            weight_remaining -= 2 * parseFloat(plate.split(" ")[0]);
         }
     }
     plates_needed_text.innerHTML = plates_needed.join("<br/>");
