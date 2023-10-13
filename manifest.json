@@ -1,0 +1,18 @@
+{
+    "theme_color": "#778899",
+    "background_color": "#778899",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "name": "PR Spotter",
+    "short_name": "PR Spotter",
+    "description": "The greatest spotting tool since the development of the arm.",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "/large_logo.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        }
+    ]
+}
