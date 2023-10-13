@@ -11,13 +11,13 @@ The greatest spotting tool since the development of the arm.
 ## v0.0.3.0 (assuming option 3)
 - [x] Add bar button
 - [x] Rename bar button
-- [ ] Change bar weight button
+- [x] Change bar weight button
 - [x] Delete bar button
 - [x] Add list of plates button
 - [x] Rename list of plates button
-- [ ] Change list of plates button
+- [x] Change list of plates button
 - [x] Delete list of plates button
-- [ ] Add prompt when creating new bar/list of plates and changing weights to ask for weights. Specify in the prompt for list of plates to separate values by commas
+- [x] Add prompt when creating new bar/list of plates and changing weights to ask for weights. Specify in the prompt for list of plates to separate values by commas
 - [ ] Validate that bar/plate weights are an integer followed by “lb”, “lbs”, “ lb”, “ lbs”, “kg” “kgs”, “ kg”, “ kgs”
 - [ ] Have calculate desired weight function be able to tell if we are talking “kg” or “lbs”
 ## v0.0.3½.0
@@ -29,7 +29,7 @@ The greatest spotting tool since the development of the arm.
 - [ ] Use the multivalue prompt for add and edit buttons
 - [ ] Change some red text spans to be our new alerts for consistancy
 - [ ] Change other alerts, confirms, and prompts to use custom standards
-- [ ] Allow for max numbers of plates (like for instance 2 45s total, then you have to move on to lighter plates when calculating
+- [ ] Allow for max numbers of plates (like for instance 2 45s total, then you have to move on to lighter plates when calculating)
 - [ ] Give option to add multiple desired weights at once and it will find the least amount of plate movement for switching and display results for each person
 - [ ] Add rename button for desired weights
 - [ ] Add delete button for desired weight

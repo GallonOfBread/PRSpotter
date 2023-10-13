@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <title>PR Spotter</title>
+        <link rel="apple-touch-icon" href="/large_logo.png">
+    </head>
     <body>
         <label for="bar_selection">Bar: </label>
         <select name="bar_selection" id="bar_selection" onchange="selected_option('bar')"></select>
@@ -32,16 +36,13 @@ body {
         </style>
         <script>
 // TODO for v0.0.3.0:
-// Change bar weight button
-// Change list of plates button
-// Add prompt when creating new bar/list of plates and changing weights to ask for weights. Specify in the prompt for list of plates to separate values by commas
 // Validate that bar/plate weights are an integer followed by “lb”, “lbs”, “ lb”, “ lbs”, “kg” “kgs”, “ kg”, “ kgs”
 // Have calculate desired weight function be able to tell if we are talking “kg” or “lbs”
 
 function add_option(dropdown) {
     let response = prompt("Enter name of new " + dropdown, dropdown);
     if (response != null && response != "" && response != dropdown && !(response in Object.keys(contents[dropdown]))) {
-        contents[dropdown][response] = ["25 lbs", ["45 lbs", "25 lbs", "10 lbs", "5 lbs", "2.5 lbs"]][["bar","plates"].indexOf(dropdown)];
+        contents[dropdown][response] = ["45 lbs", ["45 lbs", "25 lbs", "10 lbs", "5 lbs", "2.5 lbs"]][["bar","plates"].indexOf(dropdown)];
         active_indexes[dropdown] = Object.keys(contents[dropdown]).length-1;
         [bar_dropdown, plates_dropdown][["bar","plates"].indexOf(dropdown)].selectedIndex = active_indexes[dropdown];
         refresh_dropdowns();
@@ -58,13 +59,23 @@ function rename_option(dropdown) {
 }
 
 function revalue_option(dropdown) {
-    alert("Eventually you will be able to edit this " + dropdown + ".")
-    return;
-    // Same code as rename:
-    let response = prompt("Enter new name of this " + dropdown, Object.keys(contents[dropdown])[active_indexes[dropdown]]);
-    if (response != null && response != "" && response != Object.keys(contents[dropdown])[active_indexes[dropdown]] && !(response in Object.keys(contents[dropdown]))) {
-        contents[dropdown][response] = contents[dropdown][Object.keys(contents[dropdown])[active_indexes[dropdown]]];
-        delete contents[dropdown][Object.keys(contents[dropdown])[active_indexes[dropdown]]];
+    let active_key = Object.keys(contents[dropdown])[active_indexes[dropdown]];
+    let response;
+    if (dropdown == "bar") {
+        response = prompt("Enter weight of " + active_key + ".", Object.values(contents[dropdown])[active_indexes[dropdown]]);
+    }
+    else {
+        response = prompt("Enter weights for " + active_key + ". Separate values by commas.", Object.values(contents[dropdown])[active_indexes[dropdown]].join(", "));
+    }
+    
+    // fix this if thingy
+    if (response != null && response != "" && response != Object.values(contents[dropdown])[active_indexes[dropdown]] && !(response in Object.values(contents[dropdown]))) {
+        if (dropdown == "bar") {
+            contents[dropdown][active_key] = response;
+        }
+        else {
+            contents[dropdown][active_key] = response.replaceAll(", ",",").split(",");
+        }
         refresh_dropdowns();
     }
 }
