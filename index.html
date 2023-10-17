@@ -9,36 +9,88 @@
         <meta content="yes" name="apple-mobile-web-app-capable"/>
         <meta content="PR Spotter" name="apple-mobile-web-app-title"/>
         <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+        <script src="https://kit.fontawesome.com/e421ad6904.js" crossorigin="anonymous"></script>
         <link rel="apple-touch-icon" href="large_logo.png">
     </head>
     <body>
-        <label for="bar_selection">Bar: </label>
-        <select name="bar_selection" id="bar_selection" onchange="selected_option('bar')"></select>
-        <button onclick="add_option('bar')">+</button>
-        <button onclick="rename_option('bar')">I</button>
-        <button onclick="revalue_option('bar')">✎</button>
-        <button onclick="delete_option('bar')">🗑</button>
-        <br/>
-        <label for="plates_selection">Plates: </label>
-        <select name="plates_selection" id="plates_selection" onchange="selected_option('plates')"></select>
-        <button onclick="add_option('plates')">+</button>
-        <button onclick="rename_option('plates')">I</button>
-        <button onclick="revalue_option('plates')">✎</button>
-        <button onclick="delete_option('plates')">🗑</button>
-        <br/>
-        <label for="desired_weight">Desired weight: </label>
-        <input name="desired_weight" id="desired_weight"/>
-        <br/>
-        <button onclick="calculate_desired_weight()">Calculate</button>
-        <br/>
-        <span id="plates_needed"></span>
+        <div class="table center">
+            <div class="table-row">
+                <label class="table-cell" for="bar_selection">Bar: </label>
+                <select class="table-cell" name="bar_selection" id="bar_selection" onchange="selected_option('bar')"></select>
+                <div class="table-cell">
+                    <button onclick="add_option('bar')"><i class="fa-solid fa-plus"></i></button>
+                    <button onclick="edit_option('bar')"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button onclick="delete_option('bar')"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+            <div class="table-row">
+                <label class="table-cell" for="plates_selection">Plates: </label>
+                <select class="table-cell" name="plates_selection" id="plates_selection" onchange="selected_option('plates')"></select>
+                <div class="table-cell">
+                    <button onclick="add_option('plates')"><i class="fa-solid fa-plus"></i></button>
+                    <button onclick="edit_option('plates')"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button onclick="delete_option('plates')"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="center">
+            <label for="desired_weight">Desired weight: </label>
+            <input name="desired_weight" id="desired_weight"/>
+        </div>
+        <div class="center">
+            <button class="large-button" onclick="calculate_desired_weight()"><i class="fa-solid fa-dumbbell"></i> Calculate</button>
+        </div>
+        <div class="center">
+            <span id="plates_needed"></span>
+        </div>
         <style>
 h2 {
     font-size: medium;
 }
+button {
+    background-color: dodgerblue;
+    border: none;
+    color: white;
+    width: 36px;
+    font-size: 16px;
+    cursor: pointer;
+}
+label, select, button {
+    height: 36px;
+    vertical-align:middle;
+}
+select, option {
+    width: 100%
+}
+label, input, option, select, span {
+    font-size: 20px;
+}
+button:hover {
+  background-color: RoyalBlue;
+}
+.large-button {
+    margin: 4px;
+    width: auto;
+    padding: 6px;
+}
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: lightslategray;
+}
+.table {
+    display: table;
+    border-collapse: seperate;
+    border-spacing: 4px;
+}
+.table-row {
+    display: table-row;
+}
+.table-cell {
+    display: table-cell;
+}
+.center {
+    margin: auto;
+    width: fit-content;
 }
         </style>
         <script>
@@ -54,15 +106,17 @@ function add_option(dropdown) {
         [bar_dropdown, plates_dropdown][["bar","plates"].indexOf(dropdown)].selectedIndex = active_indexes[dropdown];
         refresh_dropdowns();
     }
+    revalue_option(dropdown);
 }
 
-function rename_option(dropdown) {
+function edit_option(dropdown) {
     let response = prompt("Enter new name of this " + dropdown, Object.keys(contents[dropdown])[active_indexes[dropdown]]);
     if (response != null && response != "" && response != Object.keys(contents[dropdown])[active_indexes[dropdown]] && !(response in Object.keys(contents[dropdown]))) {
         contents[dropdown][response] = contents[dropdown][Object.keys(contents[dropdown])[active_indexes[dropdown]]];
         delete contents[dropdown][Object.keys(contents[dropdown])[active_indexes[dropdown]]];
         refresh_dropdowns();
     }
+    revalue_option(dropdown);
 }
 
 function revalue_option(dropdown) {
