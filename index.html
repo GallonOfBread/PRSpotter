@@ -4,185 +4,41 @@
         <title>PR Spotter</title>
         <meta charset="utf-8">
         <meta content="The greatest spotting tool since the development of the arm." name="description"/>
-        <link href="/manifest.json" rel="manifest"/>
+        <link href="manifest.json" rel="manifest"/>
+        <link rel="stylesheet" href="styles.css">
+        <script src="equiptment.js"></script>
         <meta content="778899" name="theme-color"/>
         <meta content="yes" name="apple-mobile-web-app-capable"/>
         <meta content="PR Spotter" name="apple-mobile-web-app-title"/>
         <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
         <script src="https://kit.fontawesome.com/e421ad6904.js" crossorigin="anonymous"></script>
-        <link rel="apple-touch-icon" href="/large_logo.png">
+        <link rel="apple-touch-icon" href="large_logo.png">
     </head>
     <body>
-        <div class="table center">
-            <div class="table-row">
-                <label class="table-cell" for="bar_selection">Bar: </label>
-                <select class="table-cell" name="bar_selection" id="bar_selection" onchange="selected_option('bar')"></select>
-                <div class="table-cell">
-                    <button onclick="add_option('bar')"><i class="fa-solid fa-plus"></i></button>
-                    <button onclick="edit_option('bar')"><i class="fa-solid fa-pen-to-square"></i></button>
-                    <button onclick="delete_option('bar')"><i class="fa-solid fa-trash"></i></button>
-                </div>
-            </div>
-            <div class="table-row">
-                <label class="table-cell" for="plates_selection">Plates: </label>
-                <select class="table-cell" name="plates_selection" id="plates_selection" onchange="selected_option('plates')"></select>
-                <div class="table-cell">
-                    <button onclick="add_option('plates')"><i class="fa-solid fa-plus"></i></button>
-                    <button onclick="edit_option('plates')"><i class="fa-solid fa-pen-to-square"></i></button>
-                    <button onclick="delete_option('plates')"><i class="fa-solid fa-trash"></i></button>
-                </div>
-            </div>
+        <div class="center">
+                <label for="weight_selection">Equiptment: </label>
+                <select name="weight_selection" class="main-screen" id="weight_selection" onchange="selected_option('weight-systems')"></select>
+                <button class="main-screen" onclick="edit_equiptment('EDIT')"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="main-screen" onclick="edit_equiptment('NEW')"><i class="fa-solid fa-plus"></i></button>
         </div>
         <div class="center">
+            <h3>Lifters:</h3>
             <label for="desired_weight">Desired weight: </label>
-            <input name="desired_weight" id="desired_weight"/>
+            <input class="main-screen" type="number" min="1" name="desired_weight" id="desired_weight"/>
+            <select class="main-screen" name="unit_selection" id="unit_selection">
+                <option>lbs</option>
+                <option>kg</option>
+            </select>
         </div>
         <div class="center">
-            <button class="large-button" onclick="calculate_desired_weight()"><i class="fa-solid fa-dumbbell"></i> Calculate</button>
+            <button class="main-screen" class="large-button" onclick="calculate_desired_weight()"><i class="fa-solid fa-dumbbell"></i> Calculate</button>
         </div>
-        <div class="center">
+        <div class="center r-align-text">
             <span id="plates_needed"></span>
         </div>
-        <style>
-h2 {
-    font-size: medium;
-}
-button {
-    background-color: dodgerblue;
-    border: none;
-    text-align: center;
-    color: white;
-    width: 36px;
-    font-size: 16px;
-    cursor: pointer;
-}
-label, select, button {
-    height: 36px;
-    vertical-align:middle;
-}
-select, option {
-    width: 100%
-}
-label, input, option, select, span {
-    font-size: 20px;
-}
-button:hover {
-  background-color: RoyalBlue;
-}
-.large-button {
-    margin: 4px;
-    width: auto;
-    padding: 6px;
-}
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: lightslategray;
-}
-.table {
-    display: table;
-    border-collapse: seperate;
-    border-spacing: 4px;
-}
-.table-row {
-    display: table-row;
-}
-.table-cell {
-    display: table-cell;
-}
-.center {
-    margin: auto;
-    width: fit-content;
-}
-#desired_weight {
-    width: 192px;
-}
-        </style>
         <script>
 // TODO for v0.0.3.0:
-// Validate that bar/plate weights are an integer followed by “lb”, “lbs”, “ lb”, “ lbs”, “kg” “kgs”, “ kg”, “ kgs”
 // Have calculate desired weight function be able to tell if we are talking “kg” or “lbs”
-
-function add_option(dropdown) {
-    let response = prompt("Enter name of new " + dropdown, dropdown);
-    if (response != null && response != "" && response != dropdown && !(response in Object.keys(contents[dropdown]))) {
-        contents[dropdown][response] = ["45 lbs", ["45 lbs", "25 lbs", "10 lbs", "5 lbs", "2.5 lbs"]][["bar","plates"].indexOf(dropdown)];
-        active_indexes[dropdown] = Object.keys(contents[dropdown]).length-1;
-        [bar_dropdown, plates_dropdown][["bar","plates"].indexOf(dropdown)].selectedIndex = active_indexes[dropdown];
-        refresh_dropdowns();
-    }
-    revalue_option(dropdown);
-}
-
-function edit_option(dropdown) {
-    let response = prompt("Enter new name of this " + dropdown, Object.keys(contents[dropdown])[active_indexes[dropdown]]);
-    if (response != null && response != "" && response != Object.keys(contents[dropdown])[active_indexes[dropdown]] && !(response in Object.keys(contents[dropdown]))) {
-        contents[dropdown][response] = contents[dropdown][Object.keys(contents[dropdown])[active_indexes[dropdown]]];
-        delete contents[dropdown][Object.keys(contents[dropdown])[active_indexes[dropdown]]];
-        refresh_dropdowns();
-    }
-    revalue_option(dropdown);
-}
-
-function revalue_option(dropdown) {
-    let active_key = Object.keys(contents[dropdown])[active_indexes[dropdown]];
-    let response;
-    if (dropdown == "bar") {
-        response = prompt("Enter weight of " + active_key + ".", Object.values(contents[dropdown])[active_indexes[dropdown]]);
-    }
-    else {
-        response = prompt("Enter weights for " + active_key + ". Separate values by commas.", Object.values(contents[dropdown])[active_indexes[dropdown]].join(", "));
-    }
-    
-    // fix this if thingy
-    if (response != null && response != "" && response != Object.values(contents[dropdown])[active_indexes[dropdown]] && !(response in Object.values(contents[dropdown]))) {
-        if (dropdown == "bar") {
-            contents[dropdown][active_key] = response;
-        }
-        else {
-            contents[dropdown][active_key] = response.replaceAll(", ",",").split(",");
-        }
-        refresh_dropdowns();
-    }
-}
-
-function delete_option(dropdown) {
-    if (Object.keys(contents[dropdown]).length > 1) {
-        let certain = confirm("Are you sure you want to delete " + Object.keys(contents[dropdown])[active_indexes[dropdown]] +"?");
-        if (certain) {
-            delete contents[dropdown][Object.keys(contents[dropdown])[active_indexes[dropdown]]];
-            active_indexes[dropdown] = 0;
-            refresh_dropdowns();
-        }
-    }
-    else {
-        alert("You can't delete your only " + dropdown + ".")
-    }
-}
-
-function selected_option(dropdown) {
-    active_indexes[dropdown] = [bar_dropdown, plates_dropdown][["bar","plates"].indexOf(dropdown)].selectedIndex;
-}
-
-function refresh_dropdowns() {
-    while (bar_dropdown.options.length > 0) {                
-        bar_dropdown.remove(0);
-    } 
-    while (plates_dropdown.options.length > 0) {                
-        plates_dropdown.remove(0);
-    }
-    for (let n of Object.keys(contents["bar"])) {
-        option = document.createElement("option");
-        option.text = n;
-        bar_dropdown.add(option);
-    }
-    for (let n of Object.keys(contents["plates"])) {
-        option = document.createElement("option");
-        option.text = n;
-        plates_dropdown.add(option);
-    }
-    bar_dropdown.selectedIndex = active_indexes["bar"];
-    plates_dropdown.selectedIndex = active_indexes["plates"];
-}
 
 function calculate_desired_weight() {
     let desired_weight = desired_wight_entry.value;
@@ -190,20 +46,21 @@ function calculate_desired_weight() {
         plates_needed_text.innerHTML = "<span style='color:red'>Please only include integer in desired weight (for now).</span>";
         return;
     }
-    let bar_used = contents["bar"][Object.keys(contents["bar"])[active_indexes["bar"]]];
-    let plates_used = contents["plates"][Object.keys(contents["plates"])[active_indexes["plates"]]];
+    let bar_used = contents["weight-systems"][Object.keys(contents["weight-systems"])[active_indexes["weight-systems"]]]["bar"];
+    console.log(bar_used)
+    let plates_used = contents["weight-systems"][Object.keys(contents["weight-systems"])[active_indexes["weight-systems"]]]["plates"];
     let plates_needed = [];
-    let weight_remaining = parseFloat(desired_weight) - parseFloat(bar_used.split(" ")[0]);
+    let weight_remaining = parseFloat(desired_weight) - parseFloat(bar_used["weight"]);
     if (weight_remaining < 0) {
         plates_needed_text.innerHTML = "<span style='color:red'>Bar weighs more than desired weight.</span>";
         return;
     }
     for (let j = 0; j < plates_used.length; j++) {
         let plate = plates_used[j];
-        let num_plates = Math.floor(weight_remaining/2/parseFloat(plate.split(" ")[0]));
+        let num_plates = Math.floor(weight_remaining/2/parseFloat(plate["weight"]));
         for (let i = 0; i < num_plates; i++) {
-            plates_needed.push(plate);
-            weight_remaining -= 2 * parseFloat(plate.split(" ")[0]);
+            plates_needed.push(plate["weight"] + " " + plate["units"]);
+            weight_remaining -= 2 * parseFloat(plate["weight"]);
         }
     }
     if (weight_remaining != 0) {
@@ -212,47 +69,124 @@ function calculate_desired_weight() {
     plates_needed_text.innerHTML = plates_needed.join("<br/>");
 }
 
-let bar_dropdown = document.getElementById("bar_selection");
-let plates_dropdown = document.getElementById("plates_selection");
+let weight_dropdown = document.getElementById("weight_selection");
 let desired_wight_entry = document.getElementById("desired_weight");
 let plates_needed_text = document.getElementById("plates_needed");
 
 let contents = {
-    "bar": {
-        "Smith Machine": "25 lbs",
-        "Barbell": "45 lbs",
-        // "Barbell w/ 1 chain": "??? lbs",
-        // "Barbell w/ 2 chains": "??? lbs",
-        // "Barbell w/ weight releaser": "??? lbs",
-        "Dumbbell": "10 lbs"
-    },
-    "plates": {
-        "Planet Fitness": [
-            "45 lbs",
-            "25 lbs",
-            "10 lbs",
-            "5 lbs",
-            "2.5 lbs"
-        ],
-        "Iron Dungeon": [
-            "45 lbs",
-            "35 lbs",
-            "25 lbs",
-            "10 lbs",
-            "5 lbs",
-            "2.5 lbs",
-            "1.5 lbs",
-            "0.5 lbs"
-        ]
+    "weight-systems": {
+        "PF Smith Machine": {
+            "pinned": true,
+            "edited": "23-10-23 21:27",
+            "type": "Bar & Plates",
+            "bar": {
+                "weight": 25,
+                "units": "lbs"
+            },
+            "plates": [
+                {
+                "weight": 45,
+                "units": "lbs",
+                "quant": -1
+                },
+                {
+                "weight": 25,
+                "units": "lbs",
+                "quant": -1
+                },
+                {
+                "weight": 10,
+                "units": "lbs",
+                "quant": -1
+                },
+                {
+                "weight": 5,
+                "units": "lbs",
+                "quant": -1
+                },
+                {
+                "weight": 2.5,
+                "units": "lbs",
+                "quant": -1
+                }
+            ]
+        },
+        "ID Barbell": {
+            "pinned": true,
+            "edited": "23-10-23 21:26",
+            "type": "Bar & Plates",
+            "bar": {
+                "weight": 45,
+                "units": "lbs"
+            },
+            "plates": [
+                {
+                "weight": 45,
+                "units": "lbs",
+                "quant": 6
+                },
+                {
+                "weight": 35,
+                "units": "lbs",
+                "quant": 2
+                },
+                {
+                "weight": 25,
+                "units": "lbs",
+                "quant": 4
+                },
+                {
+                "weight": 10,
+                "units": "lbs",
+                "quant": 2
+                },
+                {
+                "weight": 5,
+                "units": "lbs",
+                "quant": 6
+                },
+                {
+                "weight": 2.5,
+                "units": "lbs",
+                "quant": 2
+                },
+                {
+                "weight": 1.5,
+                "units": "lbs",
+                "quant": 4
+                },
+                {
+                "weight": 0.5,
+                "units": "lbs",
+                "quant": 4
+                }
+            ]
+        },
+        "ID Single Dumbbell": {
+            "pinned": false,
+            "edited": "23-10-23 21:25",
+            "type": "Bar & Plates",
+            "bar": {
+                "weight": 10,
+                "units": "lbs"
+            },
+            "plates": "ID Dumbell"
+        },
+        "ID 4.5 Dumbbells": {
+            "pinned": false,
+            "edited": "23-10-23 21:25",
+            "type": "Bar & Plates",
+            "bar": "ID Barbell",
+            "plates": "ID Dumbell"
+        }
     }
 };
 
 let active_indexes = {
-    "bar": 0,
-    "plates": 0
+    "weight-systems": 0
 };
 
-refresh_dropdowns();
+refresh_dropdown();
         </script>
     </body>
 </html>

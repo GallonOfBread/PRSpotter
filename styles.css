@@ -1,0 +1,63 @@
+h3 {
+    font-size: 24px;
+}
+button {
+    background-color: dodgerblue;
+    border: none;
+    text-align: center;
+    color: white;
+    width: 36px;
+    font-size: 16px;
+    cursor: pointer;
+}
+label, select, button, input {
+    height: 36px;
+    padding: 0px;
+    border: 0px;
+    vertical-align:middle;
+}
+label, input, option, select, span {
+    font-size: 20px;
+}
+button:hover {
+  background-color: RoyalBlue;
+}
+.large-button {
+    margin: 4px;
+    width: auto;
+    padding: 6px;
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: lightslategray;
+}
+.center {
+    width: fit-content;
+    margin: auto;
+
+}
+.b_align {
+    margin-top: auto; 
+    margin-bottom: 0;
+}
+.r-align {
+    width: fit-content;
+    margin-left: auto; 
+    margin-right: 0;
+}
+.r-align-text {
+    text-align: right;
+}
+#desired_weight {
+    width: 192px;
+}
+.alert {
+    position: fixed;
+    width: fit-content;
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 24px;
+    top: 24px;
+    background-color: lightsteelblue;
+    padding: 10px;
+}

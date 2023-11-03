@@ -1,0 +1,108 @@
+{
+    "weight-systems": {
+        "PF Smith Machine": {
+            "pinned": true,
+            "edited": "23-10-23 21:27",
+            "type": "Bar & Plates",
+            "bar": {
+                "weight": 25,
+                "units": "lbs"
+            },
+            "plates": [
+                {
+                "weight": 45,
+                "units": "lbs",
+                "quant": -1
+                },
+                {
+                "weight": 25,
+                "units": "lbs",
+                "quant": -1
+                },
+                {
+                "weight": 10,
+                "units": "lbs",
+                "quant": -1
+                },
+                {
+                "weight": 5,
+                "units": "lbs",
+                "quant": -1
+                },
+                {
+                "weight": 2.5,
+                "units": "lbs",
+                "quant": -1
+                }
+            ]
+        },
+        "ID Barbell": {
+            "pinned": true,
+            "edited": "23-10-23 21:26",
+            "type": "Bar & Plates",
+            "bar": {
+                "weight": 45,
+                "units": "lbs"
+            },
+            "plates": [
+                {
+                "weight": 45,
+                "units": "lbs",
+                "quant": 6
+                },
+                {
+                "weight": 35,
+                "units": "lbs",
+                "quant": 2
+                },
+                {
+                "weight": 25,
+                "units": "lbs",
+                "quant": 4
+                },
+                {
+                "weight": 10,
+                "units": "lbs",
+                "quant": 2
+                },
+                {
+                "weight": 5,
+                "units": "lbs",
+                "quant": 6
+                },
+                {
+                "weight": 2.5,
+                "units": "lbs",
+                "quant": 2
+                },
+                {
+                "weight": 1.5,
+                "units": "lbs",
+                "quant": 4
+                },
+                {
+                "weight": 0.5,
+                "units": "lbs",
+                "quant": 4
+                }
+            ]
+        },
+        "ID Single Dumbbell": {
+            "pinned": false,
+            "edited": "23-10-23 21:25",
+            "type": "Bar & Plates",
+            "bar": {
+                "weight": 10,
+                "units": "lbs"
+            },
+            "plates": "ID Dumbell"
+        },
+        "ID 4.5 Dumbbells": {
+            "pinned": false,
+            "edited": "23-10-23 21:25",
+            "type": "Bar & Plates",
+            "bar": "ID Barbell",
+            "plates": "ID Dumbell"
+        }
+    }
+}
